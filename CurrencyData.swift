@@ -9,5 +9,6 @@
 import Foundation
 
 struct CurrencyData: Codable{
-    let rate: Double
+    let rate: Double;
+    
 }
