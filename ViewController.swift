@@ -17,6 +17,7 @@ class ViewController: UIViewController ,UIPickerViewDataSource, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        coinManager.delegate = self;
         //set viewcontroller as datasource to the currencyPicker object
         currencyPicker.dataSource = self
         //set viewcontroller class as delegate of currency picker
@@ -27,7 +28,7 @@ class ViewController: UIViewController ,UIPickerViewDataSource, UIPickerViewDele
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    let coinManager = CoinManager();
+    var coinManager = CoinManager();
     //how many rows picker should using
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
        return coinManager.currencyArray.count;
@@ -46,9 +47,15 @@ class ViewController: UIViewController ,UIPickerViewDataSource, UIPickerViewDele
         print(coinManager.currencyArray[row])
         
     }
+}
     //MARK: coinManagerDelegate method
+extension ViewController: CoinManagerDelegate{
+    func didfailWithError(error: Error) {
+        print(error)
+    }
+    
     func didUpdatePrice(price: String, currency: String){
-        DispatchQueue.main .async {
+        DispatchQueue.main.async {
             self.bitcoinLabel.text = price;
             self.currencyLabel.text = currency
             

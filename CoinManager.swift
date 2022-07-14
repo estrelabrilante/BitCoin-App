@@ -5,11 +5,12 @@
 //  Created by Angela Yu on 11/09/2019.
 //  Copyright © 2019 The App Brewery. All rights reserved.
 //
+
+import Foundation
 protocol CoinManagerDelegate {
     func didUpdatePrice(price: String, currency: String);
     func didfailWithError(error: Error);
-}
-import Foundation
+};
 
 struct CoinManager {
     var delegate: CoinManagerDelegate?;
@@ -25,7 +26,6 @@ struct CoinManager {
         let urlString = "\(baseURL)/\(currency)?apiKey=\(apiKey)";
         print(urlString);
     //Networking
-    func performRequest(with urlString : String){
         if let url = URL(string: urlString){
             let session = URLSession(configuration: .default);
             let task = session.dataTask(with: url) { (data, response, error) in
@@ -46,16 +46,13 @@ struct CoinManager {
                         print(currency);
                         print("Price for 1 currency selected:")
                         print(priceString);
-                        
-                    }
+                        }
                    }
             }
-            task.resume();
-                   
-            }
-            
+        task.resume();
+        }
+        
     }
-}
     func parseJSON(currencyData: Data) -> Double?{
         let decoder = JSONDecoder();
         do{
